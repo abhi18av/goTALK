@@ -303,7 +303,7 @@ func transcriptRated(doc *goquery.Document) string {
 	//return(p[3])
 }
 
-func transcriptGetImage(doc *goquery.Document) string {
+func transcriptGetImage(doc *goquery.Document, videoURL string) string {
 
 	imageURL, _ := doc.Find(".thumb__image").Attr("src")
 
@@ -312,8 +312,8 @@ func transcriptGetImage(doc *goquery.Document) string {
 	defer response.Body.Close()
 
 	//open a file for writing
-	htmlSplit := strings.Split(imageURL, "/")
-	talkName := htmlSplit[len(htmlSplit)-1]
+	htmlSplit := strings.Split(videoURL, "/")
+	talkName := htmlSplit[len(htmlSplit)-2]
 
 	// Establish a file name
 	fileName := "./" + talkName + ".jpg"
