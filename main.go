@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	//"TheTwinFiles/talkFetch"
+	//"theTwinFiles/talkFetch"
 	// "./talkFetch/transcriptsPage"
 	// "./talkFetch/videoPage"
 
@@ -43,6 +43,7 @@ type TranscriptPage struct {
 	AvailableTranscripts []string                  `json:"AvailableTranscripts"`
 	DatePosted           string                    `json:"DatePosted"`
 	Rated                string                    `json:"Rated"`
+	ImageURL             string                    `json:"ImageURL"`
 	TalkTranscript       map[string]talkTranscript `json:"TalkTranscript"`
 }
 
@@ -50,9 +51,7 @@ func main() {
 
 	// Add logger and stubs for better debugging
 	checkInternet()
-
-	videoURL := os.Args[1]
-
+videoURL := os.Args[1]
 	//videoURL := "https://www.ted.com/talks/ken_robinson_says_schools_kill_creativity"
 	//videoURL := "https://www.ted.com/talks/elon_musk_the_future_we_re_building_and_boring"
 
@@ -203,6 +202,7 @@ func transcriptFetchCommonInfo(url string) TranscriptPage {
 		AvailableTranscripts: transcriptAvailableTranscripts(transcriptPage),
 		DatePosted:           transcriptDatePosted(transcriptPage),
 		Rated:                transcriptRated(transcriptPage),
+		ImageURL:             transcriptGetImage(transcriptPage),
 	}
 	return transcriptPageInstance
 }

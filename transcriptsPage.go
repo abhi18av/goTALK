@@ -1,6 +1,9 @@
 package main
 
 import (
+	"io"
+	"net/http"
+	"os"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -298,4 +301,30 @@ func transcriptRated(doc *goquery.Document) string {
 	//println(r[0])
 	//println(r[1])
 	//return(p[3])
+}
+
+func transcriptGetImage(doc *goquery.Document) string {
+
+	imageURL, _ := doc.Find(".thumb__image").Attr("src")
+
+	response, e := http.Get(imageURL)
+	checkErr(e)
+	defer response.Body.Close()
+
+	//open a file for writing
+	htmlSplit := strings.Split(imageURL, "/")
+	talkName := htmlSplit[len(htmlSplit)-1]
+
+	// Establish a file name
+	fileName := "./" + talkName + ".jpg"
+
+	f, err := os.Create(fileName)
+	checkErr(err)
+	defer f.Close()
+
+	// Use io.Copy to just dump the response body to the file. This supports huge files
+	_, err = io.Copy(f, response.Body)
+	checkErr(err)
+
+	return imageURL
 }
