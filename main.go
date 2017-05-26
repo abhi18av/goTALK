@@ -133,7 +133,7 @@ func main() {
 
 func writeJSON(aStruct TedTalk) {
 
-	temp1, _ := json.Marshal(aStruct)
+	temp1, _ := json.MarshalIndent(aStruct, "", "  ")
 	//fmt.Println(string(temp1))
 	htmlSplit := strings.Split(aStruct.TalkVideoPage.TalkURL, "/")
 	talkName := htmlSplit[len(htmlSplit)-1]
