@@ -141,7 +141,7 @@ func genTranscriptURLs(langCodes map[string]string, availableLanguages []string,
 	}
 
 	//numOfURLs := len(urls)
-	//fmt.Println("generated URLs : ", numOfURLs)
+	color.Orange("generated URLs : ", numOfURLs)
 
 	return urls
 }
