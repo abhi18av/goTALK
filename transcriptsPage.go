@@ -221,14 +221,18 @@ func transcriptTalkTranscript(doc *goquery.Document) []string {
 	color.Green("4. inside transcriptTalkTranscript")
 	texts := doc.Find(".talk-transcript__para__text").Contents().Text()
 	var para []string
-	for _, text := range strings.Split(texts, "  ") {
+	splitTextsSpace := strings.Split(texts, "  ")
+	println("splitTextsSpace : ", len(splitTextsSpace))
+	for _, text := range splitTextsSpace {
 
 		//fmt.Println(text)
 		para = append(para, text)
 	}
 
 	var lines []string
-	for _, para := range strings.Split(texts, "\n\n") {
+	splitTextsNewLines := strings.Split(texts, "\n\n")
+	println("splitTextsNewLines : ", len(splitTextsNewLines))
+	for _, para := range splitTextsNewLines {
 
 		//fmt.Println(text)
 		lines = append(lines, para)
