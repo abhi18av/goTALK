@@ -143,6 +143,12 @@ func genTranscriptURLs(langCodes map[string]string, availableLanguages []string,
 	numOfURLs := len(urls)
 	println("number of generated URLs : ", numOfURLs)
 
+	/*
+		for i, url := range urls {
+
+			fmt.Println(i, " => ", url)
+		}
+	*/
 	return urls
 }
 
