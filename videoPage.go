@@ -4,13 +4,14 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/fatih/color"
 )
 
 // @@@@@@@@@@@@@@@@@@
 // VIDEO PAGE
 
 func videoAvailableSubtitlesCount(doc *goquery.Document) string {
-	println("inside videoAvailableSubtitlesCount")
+	color.Blue("1. inside videoAvailableSubtitlesCount")
 	subtitles := doc.Find(".player-hero__meta__link").Contents().Text()
 	//fmt.Println(subtitles)
 
@@ -28,7 +29,7 @@ func videoAvailableSubtitlesCount(doc *goquery.Document) string {
 }
 
 func videoSpeaker(doc *goquery.Document) string {
-	println("inside videoSpeaker")
+	color.Blue("1. inside videoSpeaker")
 	speaker := doc.Find(".talk-speaker__name").Contents().Text()
 	//fmt.Println(speaker)
 	speaker = strings.Trim(speaker, "\n")
@@ -45,7 +46,7 @@ func title(doc *goquery.Document) {
 
 func videoDuration(doc *goquery.Document) string {
 
-	println("inside videoDuration")
+	color.Blue("3. inside videoDuration")
 	duration := doc.Find(".player-hero__meta").Contents().Text()
 	//fmt.Println(duration)
 
@@ -63,7 +64,7 @@ func videoDuration(doc *goquery.Document) string {
 // TimeFilmed : Time at which the talk was filmed
 func videoTimeFilmed(doc *goquery.Document) string {
 
-	println("inside videoTimeFilmed")
+	color.Blue("4. inside videoTimeFilmed")
 	talkFilmed := doc.Find(".player-hero__meta").Contents().Text()
 
 	//	fmt.Println(talkFilmed)
@@ -75,7 +76,7 @@ func videoTimeFilmed(doc *goquery.Document) string {
 
 func videoTalkViewsCount(doc *goquery.Document) string {
 
-	println("inside videoTalkViewsCount")
+	color.Blue("5. inside videoTalkViewsCount")
 	talkViewsCount := doc.Find("#sharing-count").Contents().Text()
 	//	fmt.Println(talkViewsCount)
 
@@ -88,7 +89,7 @@ func videoTalkViewsCount(doc *goquery.Document) string {
 
 func videoTalkTopicsList(doc *goquery.Document) []string {
 
-	println("inside videoTalkTopicsList")
+	color.Blue("6. inside videoTalkTopicsList")
 	talkTopics := doc.Find(".talk-topics__list").Contents().Text()
 
 	c := strings.Split(talkTopics, "\n")
@@ -106,7 +107,7 @@ func videoTalkTopicsList(doc *goquery.Document) []string {
 
 func videoTalkCommentsCount(doc *goquery.Document) string {
 
-	println("inside videoTalkCommentsCount")
+	color.Blue("7. inside videoTalkCommentsCount")
 	talkCommentsCountt := doc.Find(".h11").Contents().Text()
 	//fmt.Println(talkCommentsCountt)
 	d := strings.Split(talkCommentsCountt, " ")
@@ -115,6 +116,6 @@ func videoTalkCommentsCount(doc *goquery.Document) string {
 }
 
 func videoTalkURL(videoURL string) string {
-	println("inside videoTalkURL")
+	color.Blue("8. inside videoTalkURL")
 	return videoURL
 }

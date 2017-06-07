@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/fatih/color"
 )
 
 var langCodes = map[string]string{
@@ -127,7 +128,7 @@ var langCodes = map[string]string{
 
 func genTranscriptURLs(langCodes map[string]string, availableLanguages []string, videoURL string) []string {
 
-	println("inside genTranscriptURLs")
+	color.Green("1. inside genTranscriptURLs")
 	langBaseURL := "/transcript?language="
 
 	var urls []string
@@ -150,7 +151,7 @@ func genTranscriptURLs(langCodes map[string]string, availableLanguages []string,
 // OUTPUT
 // Do schools kill creativity?
 func transcriptLocalTalkTitle(doc *goquery.Document) string {
-	println("inside transcriptLocalTalkTitle")
+	color.Green("2. inside transcriptLocalTalkTitle")
 	title := doc.Find(".m5").Contents().Text()
 	//fmt.Println(strings.Split(title, "\n")[2])
 	return strings.Split(title, "\n")[2]
@@ -159,7 +160,7 @@ func transcriptLocalTalkTitle(doc *goquery.Document) string {
 // OUTPUT
 // ["0:11","0:15","0:16","0:23","0:29","0:56","1:11","1:15","1:18","1:21","1:35","1:37","1:38","1:41","2:23","2:56","3:09","3:11","3:16","3:18","3:20","3:22","3:25","3:27","3:30","3:56","4:07","4:12","4:14","4:20","4:21","4:25","4:27","5:09","5:21","6:05","6:21","6:31","6:33","6:54","7:01","7:03","7:10","7:11","7:15","7:21","7:22","7:24","7:28","7:29","7:34","7:57","7:58","8:10","8:18","8:21","8:27","9:10","9:13","9:22","9:48","9:51","10:21","10:27","10:30","10:36","10:45","10:48","10:54","10:56","11:00","11:02","11:18","11:41","12:06","12:23","12:56","13:33","13:56","13:58","14:18","14:25","14:26","14:28","14:43","14:50","15:46","15:48","15:50","15:53","16:26","16:50","17:32","17:39","18:13","18:33","19:04","19:05"]
 func transcriptTimeStamps(doc *goquery.Document) []string {
-	println("inside transcriptTimeStamps")
+	color.Green("3. inside transcriptTimeStamps")
 	times := doc.Find(".talk-transcript__para__time").Contents().Text()
 	var times1 []string
 
@@ -211,7 +212,7 @@ func transcriptTimeStamps(doc *goquery.Document) []string {
 // OUTPUT
 // Seperate hunks of the Textual string
 func transcriptTalkTranscript(doc *goquery.Document) []string {
-	println("inside transcriptTalkTranscript")
+	color.Green("4. inside transcriptTalkTranscript")
 	texts := doc.Find(".talk-transcript__para__text").Contents().Text()
 	var para []string
 	for _, text := range strings.Split(texts, "  ") {
@@ -234,7 +235,7 @@ func transcriptTalkTranscript(doc *goquery.Document) []string {
 // OUTPUT
 // The entire text chunk
 func transcriptTalkTranscriptAndTimeStamps(doc *goquery.Document) []string {
-	println("inside transcriptTalkTranscriptAndTimeStamps")
+	color.Green("5. inside transcriptTalkTranscriptAndTimeStamps")
 
 	texts := doc.Find(".talk-transcript__para").Contents().Text()
 	var para []string
@@ -259,7 +260,7 @@ func transcriptTalkTranscriptAndTimeStamps(doc *goquery.Document) []string {
 // [Afrikaans Albanian Arabic Armenian Azerbaijani Basque Belarusian Bengali Bulgarian Catalan Chinese, Simplified Chinese, Traditional Croatian Czech Danish Dutch English Esperanto Estonian Filipino Finnish French French (Canada) Galician Georgian German Greek Hebrew Hungarian Indonesian Ingush Italian Japanese Korean Lao Latvian Lithuanian Macedonian Marathi Mongolian Nepali Norwegian Bokmal Persian Polish Portuguese Portuguese, Brazilian Romanian Russian Serbian Slovak Slovenian Spanish Swedish Thai Turkish Ukrainian Urdu Uzbek Vietnamese]
 // This should return an array of strings => ["langs"]
 func transcriptAvailableTranscripts(doc *goquery.Document) []string {
-	println("inside transcriptAvailableTranscripts")
+	color.Green("6. inside transcriptAvailableTranscripts")
 
 	var langsList []string
 
@@ -279,7 +280,7 @@ func transcriptAvailableTranscripts(doc *goquery.Document) []string {
 // OUTPUT
 // Jun 2006
 func transcriptDatePosted(doc *goquery.Document) string {
-	println("inside transcriptDatePosted")
+	color.Green("7. inside transcriptDatePosted")
 	posted := doc.Find(".meta__item").Contents().Text()
 	p := strings.Split(posted, "\n")
 	//fmt.Println(p[3])
@@ -290,7 +291,7 @@ func transcriptDatePosted(doc *goquery.Document) string {
 // OUTPUT
 // Inspiring, Funny
 func transcriptRated(doc *goquery.Document) string {
-	println("inside transcriptRated")
+	color.Green("8. inside transcriptRated")
 
 	rated := doc.Find(".meta__row").Contents().Text()
 
@@ -312,7 +313,7 @@ func transcriptRated(doc *goquery.Document) string {
 }
 
 func transcriptGetImage(doc *goquery.Document, videoURL string) string {
-	println("inside transcriptGetImage")
+	color.Green("9. inside transcriptGetImage")
 	imageURL, _ := doc.Find(".thumb__image").Attr("src")
 
 	response, e1 := http.Get(imageURL)
