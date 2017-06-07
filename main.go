@@ -92,10 +92,11 @@ func main() {
 	wg.Add(numOfURLs)
 
 	for _, url := range urls {
-
+		//println(i)
 		go func(url string) {
 			defer wg.Done()
 			//color.Green(url)
+
 			x, langName := transcriptFetchUncommonInfo(url)
 			langSpecificMap[langName] = x
 			//transcriptS = append(transcriptS, x)
@@ -226,5 +227,6 @@ func transcriptFetchUncommonInfo(url string) (talkTranscript, string) {
 	}
 
 	langName := strings.Split(url, "=")[1]
+	color.Cyan(url)
 	return transcript, langName
 }
