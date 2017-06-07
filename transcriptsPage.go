@@ -307,8 +307,10 @@ func transcriptGetImage(doc *goquery.Document, videoURL string) string {
 
 	imageURL, _ := doc.Find(".thumb__image").Attr("src")
 
-	response, e := http.Get(imageURL)
-	checkErr(e)
+	response, e1 := http.Get(imageURL)
+
+	checkErr(e1, "ERROR: unable to fetch the image from the transcript page")
+
 	defer response.Body.Close()
 
 	//open a file for writing
@@ -318,13 +320,15 @@ func transcriptGetImage(doc *goquery.Document, videoURL string) string {
 	// Establish a file name
 	fileName := "./" + talkName + ".jpg"
 
-	f, err := os.Create(fileName)
-	checkErr(err)
+	f, e2 := os.Create(fileName)
+
+	checkErr(e2, "ERROR: unable to create a file on disk in transcriptGetImage()")
+
 	defer f.Close()
 
 	// Use io.Copy to just dump the response body to the file. This supports huge files
-	_, err = io.Copy(f, response.Body)
-	checkErr(err)
+	_, e3 := io.Copy(f, response.Body)
+	checkErr(e3, "ERROR: unable to copy the body of response in transcriptGetImage()")
 
 	return imageURL
 }

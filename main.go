@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	//"theTwinFiles/talkFetch"
+	// "theTwinFiles/talkFetch"
 	// "./talkFetch/transcriptsPage"
 	// "./talkFetch/videoPage"
 
@@ -63,8 +63,8 @@ func main() {
 
 	// Checking if there are any subtitles at all
 	// In case there are, we send a default query to fetch the list of available languages
-	numOfSubtitles, _ := strconv.ParseInt(videoPageInfo.AvailableSubtitlesCount, 10, 64)
-
+	numOfSubtitles, e1 := strconv.ParseInt(videoPageInfo.AvailableSubtitlesCount, 10, 64)
+	checkErr(e1, "ERROR: in parsing available subtitiles in main()")
 	// This function will cause the program to EXIT if there are no subtitles
 	// Else we continue to fill the basic page
 	exitIfNoSubtitlesExist(numOfSubtitles)
@@ -133,23 +133,24 @@ func main() {
 
 func writeJSON(aStruct TedTalk) {
 
-	temp1, _ := json.MarshalIndent(aStruct, "", "  ")
+	temp1, e1 := json.MarshalIndent(aStruct, "", "  ")
+	checkErr(e1, "ERROR: unable to marshal the talk struct in writeJSON function")
 	//fmt.Println(string(temp1))
 	htmlSplit := strings.Split(aStruct.TalkVideoPage.TalkURL, "/")
 	talkName := htmlSplit[len(htmlSplit)-1]
 
 	fileName := "./" + talkName + ".json"
 
-	f, err := os.Create(fileName)
-	checkErr(err)
+	f, e2 := os.Create(fileName)
+	checkErr(e2, "ERROR: unable to create a file on disk.")
 
 	f.Write(temp1)
 	defer f.Close()
 }
 
-func checkErr(e error) {
+func checkErr(e error, errInfo string) {
 	if e != nil {
-		panic(e)
+		panic(errInfo)
 	}
 }
 
@@ -178,7 +179,8 @@ func exitIfNoSubtitlesExist(numOfSubtitles int64) {
 
 func videoFetchInfo(url string) VideoPage {
 
-	videoPage, _ := goquery.NewDocument(url)
+	videoPage, e1 := goquery.NewDocument(url)
+	checkErr(e1, "ERROR: unable to fetch the video page in videoFetchFunction")
 
 	videoPageInstance := VideoPage{
 		TalkURL:                 videoTalkURL(url),
@@ -195,7 +197,8 @@ func videoFetchInfo(url string) VideoPage {
 }
 
 func transcriptFetchCommonInfo(url string) TranscriptPage {
-	transcriptPage, _ := goquery.NewDocument(url)
+	transcriptPage, e1 := goquery.NewDocument(url)
+	checkErr(e1, "ERROR: unable to fetch the common transcript page info.")
 
 	transcriptPageInstance := TranscriptPage{
 
@@ -210,7 +213,8 @@ func transcriptFetchCommonInfo(url string) TranscriptPage {
 func transcriptFetchUncommonInfo(url string) (talkTranscript, string) {
 
 	//fmt.Println(url)
-	transcriptPage, _ := goquery.NewDocument(url)
+	transcriptPage, e1 := goquery.NewDocument(url)
+	checkErr(e1, "ERROR: unable to fetch the Uncommon transcript page info.")
 	//fmt.Println(transcriptLocalTalkTitle(transcriptPage))
 
 	transcript := talkTranscript{
