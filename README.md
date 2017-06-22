@@ -8,7 +8,7 @@ This little program fetches all the basic stats and the transcripts of a given T
 - Now `got get` the following packages 
   -   `go get github.com/PuerkitoBio/goquery`
   -   `go get github.com/fatih/color`
-  -   `github.com/imdario/mergo`
+  -   `go get github.com/imdario/mergo`
 - Clone the repo with `git clone https://github.com/abhi18av/goTALK`
 - Move inside the folder `$ cd goTALK`
 - Build the package with `go build .`
